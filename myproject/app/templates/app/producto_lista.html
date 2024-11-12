@@ -1,0 +1,21 @@
+{% block content %}
+  <div class="container mt-4">
+    <h1>Lista de Productos</h1>
+    <a href="{% url 'producto_crear' %}" class="btn btn-primary mb-3">Crear Producto</a>
+    
+    {% if productos %}
+      <ul class="list-group">
+        {% for producto in productos %}
+          <li class="list-group-item">
+            <strong>{{ producto.nombre }}</strong> - ${{ producto.precio }}
+            <p><strong>Descripción<strong> {{ producto.descripcion }}</p>  <!-- Muestra la descripción -->
+            <p><strong>Fecha de creación:<strong> {{ producto.fecha_creacion }}</p>  <!-- Muestra la fecha de creación -->
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}  
+      <p>No hay productos disponibles.</p>
+    {% endif %}
+  </div>
+{% endblock %}
+

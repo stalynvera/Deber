@@ -1,0 +1,20 @@
+{% block content %}
+  <div class="container mt-4">
+    <h1>Eliminar Producto</h1>
+    <p>A continuación se encuentran todos los productos. Puedes eliminarlos haciendo clic en el botón "Eliminar".</p>
+    
+    <ul class="list-group">
+      {% for producto in productos %}
+        <li class="list-group-item">
+          <strong>{{ producto.nombre }}</strong> - ${{ producto.precio }}
+          <form action="{% url 'producto_eliminar' %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <input type="hidden" name="producto_id" value="{{ producto.id }}">
+            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+    
+  </div>
+{% endblock %}

@@ -1,0 +1,13 @@
+
+{% block content %}
+  <div class="container mt-4">
+    <h1>Editar Producto: {{ producto.nombre }}</h1>
+    <a href="{% url 'producto_editar_lista' %}" class="btn btn-secondary mb-3">Volver a la lista de productos</a>
+    
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </form>
+  </div>
+{% endblock %}
