@@ -1,0 +1,15 @@
+{% block content %}
+  <h2>Eliminar Categorías</h2>
+  <ul>
+    {% for categoria in categorias %}
+      <li>
+        {{ categoria.nombre }}
+        <form method="POST" style="display:inline;">
+          {% csrf_token %}
+          <input type="hidden" name="categoria_id" value="{{ categoria.id }}">
+          <button type="submit">Eliminar</button>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

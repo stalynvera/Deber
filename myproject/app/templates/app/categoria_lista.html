@@ -1,0 +1,14 @@
+{% block content %}
+  <div class="container mt-4">
+    <h1>Lista de Categorías</h1>
+    <a href="{% url 'categoria_crear' %}" class="btn btn-primary mb-3">Crear Categoría</a>
+    <ul class="list-group">
+      {% for categoria in categorias %}
+        <li class="list-group-item">
+          {{ categoria.nombre }}
+          <a href="{% url 'categoria_eliminar' categoria.id %}" class="btn btn-danger btn-sm float-end">Eliminar</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}

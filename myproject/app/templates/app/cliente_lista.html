@@ -1,0 +1,14 @@
+{% block content %}
+  <div class="container mt-4">
+    <h1>Lista de Clientes</h1>
+    <a href="{% url 'cliente_crear' %}" class="btn btn-primary mb-3">Crear Cliente</a>
+    <ul class="list-group">
+      {% for cliente in clientes %}
+        <li class="list-group-item">
+          {{ cliente.nombre }} - {{ cliente.email }}
+          <a href="{% url 'cliente_eliminar' cliente.id %}" class="btn btn-danger btn-sm float-end">Eliminar</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}

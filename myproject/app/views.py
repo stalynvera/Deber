@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
-from .models import Producto
-from .Forms import ProductoForm
+from .models import Producto,Cliente,Categoria,Orden
+from .Forms import ProductoForm,CategoriaForm,OrdenForm,ClienteForm
 
 # Crear
 @login_required
@@ -62,3 +62,100 @@ def producto_eliminar(request):
 def producto_editar_lista(request):
     productos = Producto.objects.all()
     return render(request, 'app/producto_editar_lista.html', {'productos': productos})
+
+# Crear categoría
+@login_required
+@permission_required('app.add_categoria', raise_exception=True)
+def categoria_crear(request):
+    if request.method == 'POST':
+        form = CategoriaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('categoria_lista')
+    else:
+        form = CategoriaForm()
+    
+    return render(request, 'app/categoria_form.html', {'form': form})
+
+# Lista de categorías
+@login_required
+@permission_required('app.view_categoria', raise_exception=True)
+def categoria_lista(request):
+    categorias = Categoria.objects.all()
+    return render(request, 'app/categoria_lista.html', {'categorias': categorias})
+
+# Eliminar categoría
+@login_required
+@permission_required('app.delete_categoria', raise_exception=True)
+def categoria_eliminar(request, id):
+    categoria = get_object_or_404(Categoria, id=id)
+    if request.method == 'POST':
+        categoria.delete()
+        return redirect('categoria_lista')
+    return render(request, 'app/categoria_eliminar.html', {'categoria': categoria})
+
+# **Vista para Clientes**
+
+# Crear cliente
+@login_required
+@permission_required('app.add_cliente', raise_exception=True)
+def cliente_crear(request):
+    if request.method == 'POST':
+        form = ClienteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('cliente_lista')
+    else:
+        form = ClienteForm()
+    
+    return render(request, 'app/cliente_form.html', {'form': form})
+
+# Lista de clientes
+@login_required
+@permission_required('app.view_cliente', raise_exception=True)
+def cliente_lista(request):
+    clientes = Cliente.objects.all()
+    return render(request, 'app/cliente_lista.html', {'clientes': clientes})
+
+# Eliminar cliente
+@login_required
+@permission_required('app.delete_cliente', raise_exception=True)
+def cliente_eliminar(request, id):
+    cliente = get_object_or_404(Cliente, id=id)
+    if request.method == 'POST':
+        cliente.delete()
+        return redirect('cliente_lista')
+    return render(request, 'app/cliente_eliminar.html', {'cliente': cliente})
+
+# **Vista para Órdenes**
+
+# Crear orden
+@login_required
+@permission_required('app.add_orden', raise_exception=True)
+def orden_crear(request):
+    if request.method == 'POST':
+        form = OrdenForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('orden_lista')
+    else:
+        form = OrdenForm()
+    
+    return render(request, 'app/orden_form.html', {'form': form})
+
+# Lista de órdenes
+@login_required
+@permission_required('app.view_orden', raise_exception=True)
+def orden_lista(request):
+    ordenes = Orden.objects.all()
+    return render(request, 'app/orden_lista.html', {'ordenes': ordenes})
+
+# Eliminar orden
+@login_required
+@permission_required('app.delete_orden', raise_exception=True)
+def orden_eliminar(request, id):
+    orden = get_object_or_404(Orden, id=id)
+    if request.method == 'POST':
+        orden.delete()
+        return redirect('orden_lista')
+    return render(request, 'app/orden_eliminar.html', {'orden': orden})
